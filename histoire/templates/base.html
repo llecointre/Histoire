@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <link rel="stylesheet" href="/static/css/style.css" />
+   <title>{% block title %}Welcome page{% endblock %}</title>
+</head>
+<body>
+<header>{% block header %}{% endblock %}</header>
+      <nav>
+       {% block nav %}
+       {% endblock %}
+   </nav>
+   <section>
+        {% block content %} 
+        {% endblock %}
+   </section>
+<footer>{% block footer %}{% endblock %}</footer>
+</body>
+</html>
