@@ -1,0 +1,25 @@
+/* Banniere */
+
+#page
+{
+    width:90%;
+    margin:auto;
+    display:flex;
+    flex-direction:column; 
+}
+
+
+#imageBanniere
+{
+    position:relative;
+    width:100%;
+}
+
+
+#imageMap
+{
+    position:relative;
+    width:100%;
+}
+
+

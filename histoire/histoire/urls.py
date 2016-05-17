@@ -3,9 +3,16 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
-urlpatterns = patterns('',
+from articles.models import Article
+from django.views.generic import ListView
+
+urlpatterns = patterns('histoire',
     # Examples:
-    url(r'^$', 'histoire.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^$', ListView.as_view(model=Article,
+                    context_object_name="last_articles",
+                    template_name="base.html")),
+    #url(r'^$', 'views.home', name='home'),
+    url(r'^articles/', include('articles.urls')),
+    url(r'^network/', include('network.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

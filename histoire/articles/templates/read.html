@@ -1,0 +1,6 @@
+<h1>{{ article.title }} <span class="small">dans {{ article.category.name }}</span></h1>
+<p class="infos">Writed by {{ article.author }}, {{ article.date|date:"DATE_FORMAT" }}</p>
+<div class="content">{{ article.contents|linebreaks }}</div>
+
+
+

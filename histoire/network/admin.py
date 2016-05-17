@@ -2,7 +2,8 @@ from django.contrib import admin
 
 # Register your models here.
 
-from network.models import Article, Category, Character, People, Period, Region, Profil
+from network.models import Profil
+from articles.models import Article, Category, Character, People, Period, Region
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title','author','date','category', 'subcategories')

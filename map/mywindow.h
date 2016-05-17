@@ -1,19 +1,32 @@
-/*#ifndef MYWINDOW_H
+#ifndef MYWINDOW_H
 #define MYWINDOW_H
 
 #include <QMainWindow>
-#include <QFormLayout>
+#include <QMessageBox>
 #include <QPushButton>
 
 class MyWindow : public QMainWindow
 {
+    Q_OBJECT
+
 public:
     MyWindow();
 
-private:
-    QPushButton *button;
+public slots:
+    void openColorDialog();
+    void draw();
 
+private:
+    QWidget *zoneCentrale;
+    QLabel *map;
+    QPixmap pixMap;
+    QSize *labelSize;
+
+protected :
+    //int flagModify;
+    //void mousePressEvent(QMouseEvent *);
+    void paintEvent(QPaintEvent *);
 };
 
-#endif // MYWINDOW_H*/
+#endif // MYWINDOW_H
 

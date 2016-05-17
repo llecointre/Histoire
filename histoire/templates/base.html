@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,15 +6,78 @@
    <title>{% block title %}Welcome page{% endblock %}</title>
 </head>
 <body>
-<header>{% block header %}{% endblock %}</header>
-      <nav>
-       {% block nav %}
-       {% endblock %}
-   </nav>
-   <section>
+    <div id="page">
+        <header id="banniere">{% block header %}
+            <div id="banniere">
+                <img alt="banniere" src="{% static 'img/banniere.jpeg' %}" id="imageBanniere" />
+            </div>{% endblock %}</header>
+        <nav>
+            {% block nav %}
+            <table id="introduction" >
+                <tbody>
+                    <tr>
+                        <td>
+                            <table id="logo">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div id="welcome">
+                                            Welcome to History,
+                                            </div>
+                                            <div>
+                                            The open social network for historians.
+                                            </div>
+                                         </td>
+                                     </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <ul>
+                                <li><a id="General" href="#">General</a></li>
+                                <li><a id="Arts" href="#">Arts</a></li>
+                                <li><a id="Characters" href="#">Characters</a></li>
+                            </ul>
+                         </td>
+                         <td>
+                            <ul>
+                                <li><a id="Technics" href="#">Technics</a></li>
+                                <li><a id="Periods" href="#">Period</a></li>
+                                <li><a id="Events" href="#">Events</a></li>
+                            </ul>
+                        </td>
+                        <td>
+                             {% block connexion %}
+                             {% if user.is_authenticated %}
+                                <div><a id="logout" href="{% url 'network.views.log_out' %}">logout</a></div>
+                                <div><a id="profil" href="/network">My profile</a></div>
+                                {% else %}
+                                <div><a id="login" href="{% url 'network.views.log_in' %}">login</a></div>
+                             {% endif %}
+                             {% endblock %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {% endblock %}
+        </nav>
+        <section>
         {% block content %} 
+            <aside id="map">
+                <img alt="map" id="imageMap" src="{% static 'img/map.svg' %}" />
+            </aside>
+            <aside id="article">
+                {% for article in last_articles %}
+                    <div class = "article">
+                        <p><a href="{% url 'articles.views.read' article.id %}">{{ article.title }} : {{ article.contents|truncatewords_html:80 }}...</a></p>
+                    </div>
+                {% empty %}
+                    <p>Aucun article.</p>
+                {% endfor %}
+            </aside>
         {% endblock %}
-   </section>
-<footer>{% block footer %}{% endblock %}</footer>
+        </section>
+        <footer>{% block footer %}{% endblock %}</footer>
+    </div>
 </body>
 </html>
