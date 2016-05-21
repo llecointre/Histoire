@@ -20,16 +20,6 @@ class GeneralArticle(Article):
         return self.title        
 
 
-class Area(Article):
-    
-    class Meta:
-        abstract = True
-        
-class Point(Article):
-    
-    class Meta:
-        abstract = True
-
 ####### PERIOD ######
 
 class PeriodArticle(Article):
@@ -47,7 +37,7 @@ class Period(models.Model): #epoque, dynastie...
 
 ####### PEOPLE #######
 
-class PeopleArticle(Area):
+class PeopleArticle(Article):
     people = models.ForeignKey('People')
     
     def __str__(self):
@@ -61,7 +51,7 @@ class People(models.Model):
         
 ####### ART ########
 
-class ArtArticle(Area):
+class ArtArticle(Article):
     art = models.ForeignKey('Art')
     
     def __str__(self):
@@ -76,7 +66,7 @@ class Art(models.Model):
 
 ######## PHILOSOPHY #######
 
-class PhilosophyArticle(Area):
+class PhilosophyArticle(Article):
     philosophy = models.ForeignKey('Philosophy')
     
     def __str__(self):
@@ -91,7 +81,7 @@ class Philosophy(models.Model):
 
 ####### RELIGION ########
 
-class ReligionArticle(Area):
+class ReligionArticle(Article):
     religion = models.ForeignKey('Religion')
     
     def __str__(self):
@@ -105,7 +95,7 @@ class Religion(models.Model):
 
 ####### CHARACTER #######
 
-class CharacterArticle(Point):
+class CharacterArticle(Article):
     character = models.ForeignKey('Character')
     
     def __str__(self):
@@ -123,7 +113,7 @@ class Character(models.Model):
 
 ###### REGION #######
 
-class RegionArticle(Area):
+class RegionArticle(Article):
     region = models.ForeignKey('Region')
     
     def __str__(self):
@@ -138,7 +128,7 @@ class Region(models.Model): #avec plusieurs niveaux qui vont correspondre a leur
         
 ######## EVENT ########
 
-class EventArticle(Point):
+class EventArticle(Article):
 
     class Meta:
         abstract = True 
@@ -184,6 +174,7 @@ class Battle(models.Model):
     war = models.ForeignKey('War')
     latitude = models.FloatField(null=True) #add validators
     longitude = models.FloatField(null=True)
+    description = models.TextField(null=False)
     
     def __str__(self):
         return self.name
