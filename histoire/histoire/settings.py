@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'network',
     'articles',
+    'map',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -63,8 +63,15 @@
         </nav>
         <section>
         {% block content %} 
-            <aside id="map">
-                <img alt="map" id="imageMap" src="{% static 'img/map.svg' %}" />
+            <aside id="mapAside">
+                <div id="map" >
+                </div>
+                <p>
+                    <input type="radio" name="mapType" id="satView" value="satView" checked>
+                    <label for="satView">Satellite</label>
+                    <input type="radio" name="mapType" id="eventView" value="eventView">
+                    <label for="eventView">Events</label>
+            </p>
             </aside>
             <aside id="article">
                 {% for article in last_articles %}
@@ -79,5 +86,44 @@
         </section>
         <footer>{% block footer %}{% endblock %}</footer>
     </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWybf3sYi8wkVJFy0OWIGYGzw3BWF7ZkE&callback=initialize" async defer></script>
+    <script src=/static/js/map.js> 
+    console.log("Hello World");
+    var markers = [];
+    var map;
+    var mapDiv = document.getElementById('map');
+    
+    function initialize() {
+    var Latlng = new google.maps.LatLng(49.224,5.4357);    
+    
+    var mapOptions = {
+        zoom: 8,
+        center:Latlng,
+        streetViewControl: false,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    
+    map = new google.maps.Map(mapDiv, mapOptions);
+    
+    var size = new google.maps.Size(20,32);
+    
+    {% for marker in battles %}
+        var image = {
+            url:"{{ marker.image }}"
+            //size: new google.maps.Size(20,32)
+        };
+   
+        var marker = new google.maps.Marker({
+            icon: image,
+            position: new google.maps.LatLng({{ marker.latitude }},{{ marker.longitude }}),
+            map:map
+        });
+        markers.push(marker);
+    {% endfor %}
+    }
+    
+    console.log("Hello World");
+    </script>
 </body>
 </html>
