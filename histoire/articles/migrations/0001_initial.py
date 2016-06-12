@@ -7,60 +7,261 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('network', '0004_auto_20160517_1615'),
+        ('network', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Article',
+            name='Art',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('title', models.CharField(max_length=100)),
-                ('date', models.DateTimeField(auto_now_add=True, verbose_name='Date de parution')),
-                ('subcategories', models.CharField(null=True, max_length=100)),
-                ('contents', models.TextField()),
-                ('nb_views', models.IntegerField(default=0)),
-                ('author', models.ForeignKey(to='network.Profil')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
             ],
         ),
         migrations.CreateModel(
-            name='Category',
+            name='ArtArticle',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('nom', models.CharField(max_length=30)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('art', models.ForeignKey(to='articles.Art')),
+                ('author', models.ManyToManyField(to='network.Profil')),
             ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='Battle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=100)),
+                ('image', models.CharField(max_length=200)),
+                ('latitude', models.FloatField(null=True)),
+                ('longitude', models.FloatField(null=True)),
+                ('description', models.TextField()),
+                ('beginDate', models.DateField()),
+                ('endDate', models.DateField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='BattleArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('battle', models.ForeignKey(to='articles.Battle')),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Character',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('nom', models.CharField(max_length=100)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
+                ('image', models.CharField(max_length=200)),
+                ('latitude', models.FloatField(null=True)),
+                ('longitude', models.FloatField(null=True)),
             ],
+        ),
+        migrations.CreateModel(
+            name='CharacterArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('character', models.ForeignKey(to='articles.Character')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='GeneralArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='Invention',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=100)),
+                ('image', models.CharField(max_length=200)),
+                ('latitude', models.FloatField(null=True)),
+                ('longitude', models.FloatField(null=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='InventionArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('invention', models.ForeignKey(to='articles.Invention')),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='People',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('nom', models.CharField(max_length=100)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
             ],
+        ),
+        migrations.CreateModel(
+            name='PeopleArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('people', models.ForeignKey(to='articles.People')),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Period',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('nom', models.CharField(max_length=100)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
             ],
+        ),
+        migrations.CreateModel(
+            name='PeriodArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('period', models.ForeignKey(to='articles.Period')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='Philosophy',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PhilosophyArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('philosophy', models.ForeignKey(to='articles.Philosophy')),
+            ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='Region',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('nom', models.CharField(max_length=100)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
             ],
         ),
+        migrations.CreateModel(
+            name='RegionArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('region', models.ForeignKey(to='articles.Region')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='Religion',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=50)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='ReligionArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('religion', models.ForeignKey(to='articles.Religion')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='War',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=100)),
+                ('beginDate', models.DateField()),
+                ('endDate', models.DateField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='WarArticle',
+            fields=[
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('title', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(verbose_name='Date de parution', auto_now_add=True)),
+                ('content', models.TextField()),
+                ('nb_views', models.IntegerField(default=0)),
+                ('author', models.ManyToManyField(to='network.Profil')),
+                ('war', models.ForeignKey(to='articles.War')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
         migrations.AddField(
-            model_name='article',
-            name='category',
-            field=models.ForeignKey(to='articles.Category'),
+            model_name='battle',
+            name='war',
+            field=models.ForeignKey(to='articles.War'),
         ),
     ]

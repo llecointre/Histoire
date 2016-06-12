@@ -150,14 +150,17 @@ class Invention(models.Model):
         return self.name
         
 class WarArticle(EventArticle):
-    invention = models.ForeignKey('Invention')
-    ## + possibilite d'ajouter un inventeur relie a la classe personnage
+    war = models.ForeignKey('War')
     
     def __str__(self):
         return self.title
         
 class War(models.Model):
     name = models.CharField(max_length=100)
+    beginDate = models.DateField(auto_now_add=False, auto_now=False)
+    endDate = models.DateField(auto_now_add=False, auto_now=False)
+    #beginYear = models.IntegerField()
+    #endYear = models.IntegerField()
     
     def __str__(self):
         return self.name
@@ -175,6 +178,10 @@ class Battle(models.Model):
     latitude = models.FloatField(null=True) #add validators
     longitude = models.FloatField(null=True)
     description = models.TextField(null=False)
+    beginDate = models.DateField(auto_now_add=False, auto_now=False )
+    endDate = models.DateField(auto_now_add=False, auto_now=False )
+    #beginYear = models.IntegerField()
+    #endYear = models.IntegerField()
     
     def __str__(self):
         return self.name

@@ -71,6 +71,9 @@
                      <label for="satView">Satellite</label>
                      <input type="radio" name="mapType" id="eventView" value="eventView">
                      <label for="eventView">Events</label>
+                     <input type="range" min="0" max="2016" value="2016" onchange="showValue(this.value)" id="year" />
+                     <label>Year</label> : <input type="number" name="year" id="range" value="2016" min="0" max="2016" />
+                     <button id="bouton">Ok</button>
                  </p>
                  <div id ="description">
                  </div>
@@ -96,31 +99,37 @@
     var markers = [];
     var description = document.getElementById("description");
     
-    function addMarker(){
-        {% for marker in battles %} 
-            var image = {
-                url:"{{ marker.image }}",
-                size: new google.maps.Size(20,32)
-            };
-               
-            var marker = new google.maps.Marker({
-                icon: image,
-                position: new google.maps.LatLng({{ marker.latitude }},{{ marker.longitude }}),
-            });
+    function addMarker(date){
+        markers = [];
+        
+        console.log(date);
+        
+        {% for marker in battles %}
+            if (( {{ marker.beginDate.year }} <= date) && (date <= {{ marker.endDate.year }} )) 
+            {
+                var image = {
+                    url:"{{ marker.image }}",
+                    size: new google.maps.Size(20,32)
+                };
+                   
+                var marker = new google.maps.Marker({
+                    icon: image,
+                    position: new google.maps.LatLng({{ marker.latitude }},{{ marker.longitude }}),
+                });
             
-            marker.addListener('click', function(e){
-                description.innerHTML = "<p> {{ marker.description }} </p>";
+                marker.addListener('click', function(e){
+                    description.innerHTML = "<p> {{ marker.description }} </p>";
                 //getComputedStyle(description).visibility = visible;
-            });
+                });
             
-            markers.push(marker);
-            
+                markers.push(marker);
+            }            
         {% endfor %}
     }
         
        
     console.log("Hello World");
     </script>
-    <script  src=/static/js/map.js></script>
+    <script src="{% static 'js/map.js' %}"></script>
 </body>
 </html>
